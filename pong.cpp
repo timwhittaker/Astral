@@ -86,12 +86,12 @@ void displayScene()
         glEnd();
 
         // Setup Ball display
-        //glPointSize(50);
-        //glBegin(GL_POINTS);
-        //        glColor3f(0,0,1);
-        //        glVertex2i(ball->getPosition().x,ball->getPosition().y);
+        glPointSize(50);
+        glBegin(GL_POINTS);
+                glColor3f(0,0,1);
+                glVertex2i(ball->getPosition().x,ball->getPosition().y);
         //        ball->simBall(10);
-        //glEnd();
+        glEnd();
 
         glFlush();
 }
@@ -117,6 +117,13 @@ void idle()
 	glutPostRedisplay();
 }
 
+void timer(int)
+{
+	glutPostRedisplay();
+	glutTimerFunc(1000/60,timer,0);
+	ball->simBall(1.0);
+}
+
 // Main loop
 
 int main(int argc, char** argv)
@@ -139,7 +146,8 @@ int main(int argc, char** argv)
 		
 	glutSpecialFunc(Control1);
 	glutKeyboardFunc(Control2);
-	glutIdleFunc(idle);
+	//glutIdleFunc(idle);
+	glutTimerFunc(0,timer,0);
 	glutDisplayFunc(display);
 	
 	glutMainLoop();
