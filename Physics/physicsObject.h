@@ -9,11 +9,15 @@
 class PhysicsObject
 {
 public:
+
+	PhysicsObject(): m_position(Vector3(0.0,0.0,0.0)), m_velocity(Vector3(0.0,0.0,0.0)), m_acceleration(Vector3(0.0,0.0,0.0)),m_mass(0.0) {}
+
 	PhysicsObject(const Vector3& position, const Vector3& velocity, const Vector3& acceleration, const double& mass):
 		m_position(position),
 		m_velocity(velocity),
        		m_acceleration(acceleration),
        		m_mass(mass)	{}
+
 
 	void SimulateObject(double delta);
 	

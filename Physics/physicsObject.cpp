@@ -50,23 +50,17 @@ void PhysicsObject::setAcceleration(Vector3 acceleration)
 
 void PhysicsObject::SimulateObject(double delta)
 {
-	/* TODO */
-	/* Should change Vector3 to a 
-	 * 6D vector... compute stuff
-	 * in phase space. Current method
-	 * is a bit wack.
-	 */
-
 	// Compute acceleration from masses
 	Vector3 resultingAcc = m_acceleration;
-	resultingAcc = resultingAcc+forceAccum/m_mass;
+	if (m_mass != 0) {resultingAcc = resultingAcc+forceAccum/m_mass;}
+	else {resultingAcc=Vector3(0.0,0.0,0.0);}
 	/* Compute new positions and velocities */
 	Vector3 x_state = Vector3(m_position.x, m_velocity.x, resultingAcc.x);
 	Vector3 y_state = Vector3(m_position.y, m_velocity.y, resultingAcc.y);
 	Vector3 z_state = Vector3(m_position.z, m_velocity.z, resultingAcc.z);
-	Integrate(dx,x_state,0,delta,1,RK4);
-	Integrate(dy,y_state,0,delta,1,RK4);
-	Integrate(dz,z_state,0,delta,1,RK4);
+	Integrate(dx,x_state,0,delta,1,Euler);
+	Integrate(dy,y_state,0,delta,1,Euler);
+	Integrate(dz,z_state,0,delta,1,Euler);
 	
 	/* Update positions and velocities */
 	setPosition(Vector3(x_state.x,y_state.x,z_state.x));
