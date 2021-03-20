@@ -14,6 +14,7 @@ public:
 	
 	Vector3 getPosition() {return position;};
 	Vector3 getVelocity() {return velocity;};
+	Vector3 getAcceleration() {return acceleration;};
 
 	void setPosition(Vector3 pos);
 	void setVelocity(Vector3 vel);

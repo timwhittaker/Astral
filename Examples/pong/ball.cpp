@@ -15,7 +15,7 @@ Ball::Ball(Player* playerOne, Player* playerTwo)
 	this->position = Vector3(0.0,0.0,0.0);
 	this->velocity = Vector3(0.0,0.0,0.0);
 	this->acceleration = Vector3(0.0,0.0,0.0);
-	double mass = 0.0;
+	double mass = 1.0;
 
 	this->ballPhys = PhysicsObject(position,velocity,acceleration,mass);
 }
@@ -35,6 +35,7 @@ void Ball::setVelocity(Vector3 vel)
 void Ball::setAcceleration(Vector3 acc)
 {
 	this->acceleration = acc;
+	ballPhys.setAcceleration(acc);
 }
 
 
@@ -89,7 +90,9 @@ void Ball::simBall(double delta)
 	checkWallHit();
 	checkPlayerOneHit();
 	checkPlayerTwoHit();
-	// Update velocities as required
+	// Update acceleration along velocity
+	Vector3 newAcc = this->velocity*this->velocity.norm()*0.001;
+	ballPhys.addForce(newAcc);
 	// Perform time step
 	ballPhys.SimulateObject(delta);
 	// Update ball position
